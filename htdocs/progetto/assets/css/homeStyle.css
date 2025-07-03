@@ -1,0 +1,210 @@
+/* Stile di base per il body */
+body {
+  margin: auto;
+  padding: 0;
+  background-color: #f8f9fa; /* Sfondo chiaro */
+}
+
+/* Header della pagina */
+header {
+  text-align: center;
+  background-color: #2F384E;  /* Blu più scuro e elegante */
+  color: rgb(0, 0, 0);
+}
+/* Classe personalizzata per il colore dell'h1 nell'header */
+.text-header {
+  color: #C7D66D; /* Colore personalizzato */
+}
+
+/* icona user a tendina */
+.btn-user {
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+.btn-user:hover {
+  color: #0056b3;
+}
+
+.dropdown-menu {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+}
+
+.dropdown-item.text-danger {
+  color: #dc3545 !important;
+}
+
+.dropdown-item.text-danger:hover {
+  background-color: #f8d7da;
+}
+
+/* Contenitore del bottone di logout */
+.btn-container {
+  position: absolute; /* Posizionamento assoluto */
+  top: 130px;         /* Posizionato più in basso rispetto alla versione precedente */
+  left: 20px;         /* Posizionato più a sinistra rispetto ai margini */
+  background-color: rgba(255, 255, 255, 0);
+  padding: 1.5rem;
+  border: 1px solid #dddddd00;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0);
+  width: 300px; /* Larghezza fissa */
+}
+
+/* Stile del bottone */
+/* Modifica al pulsante di logout */
+#logoutButton {
+  color: white;              /* Colore del testo */
+  border: none;              /* Nessun bordo */
+  padding: 10px 20px;        /* Spaziatura */
+  border-radius: 8px;        /* Bordo arrotondato */
+  font-size: 1rem;           /* Dimensione del testo */
+  cursor: pointer;          /* Indica che è cliccabile */
+}
+
+#logoutButton:hover {
+  background-color: #1976D2; /* Colore più scuro al passaggio del mouse */
+}
+
+/* Modifica alla posizione del pulsante di logout */
+@media (min-width: 768px) { /* Per dispositivi di dimensione media e superiore */
+  .col-md-6.text-center.text-md-end {
+    position: relative;
+    top: 15px; /* Alza il pulsante un po' più in alto rispetto a dove era */
+    right: 10px; /* Aggiungi un po' di margine a destra per non essere troppo vicino al bordo */
+  }
+}
+
+/* Grafici */
+canvas {
+max-width: 100%;
+min-height: 400px;
+}
+
+/* Progressi */
+.custom-flex {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+gap: 5.0rem;
+}
+
+.progress {
+  width: 200px;
+  height: 200px;
+  background: none;
+  position: relative;
+}
+
+.progress::after {
+content: "";
+width: 100%;
+height: 100%;
+border-radius: 50%;
+border: 8px solid #eee;
+position: absolute;
+top: 0;
+left: 0;
+}
+
+.progress>span {
+width: 50%;
+height: 100%;
+overflow: hidden;
+position: absolute;
+top: 0;
+z-index: 1;
+}
+
+.progress .progress-left {
+left: 0;
+}
+
+.progress .progress-bar {
+width: 100%;
+height: 100%;
+background: none;
+border-width: 6px;
+border-style: solid;
+position: absolute;
+top: 0;
+}
+
+.progress .progress-left .progress-bar {
+left: 100%;
+border-top-right-radius: 110px;
+border-bottom-right-radius: 110px;
+border-left: 0;
+transform-origin: center left;
+}
+
+.progress .progress-right {
+right: 0;
+}
+
+.progress .progress-right .progress-bar {
+left: -100%;
+border-top-left-radius: 110px;
+border-bottom-left-radius: 110px;
+border-right: 0;
+transform-origin: center right;
+}
+
+.progress .progress-value {
+position: absolute;
+top: 0;
+left: 0;
+}
+
+.rounded-lg {
+border-radius: 1rem;
+}
+
+.text-gray {
+color: #474747;
+}
+
+div.h4 {
+line-height: 1rem;
+}
+
+h1{
+color: black;
+}
+
+.floating-btn {
+position: fixed;
+bottom: 40px;   /* Spostato di più dall'angolo in basso */
+right: 40px;    /* Posizionato in basso a destra */
+z-index: 1050;  /* Deve essere sopra agli altri elementi */
+width: 60px;
+height: 60px;
+font-size: 24px;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: transform 0.2s;
+}
+
+.floating-btn:hover {
+transform: scale(1.1);
+}
+
+/* Adattamento per schermi piccoli */
+@media (max-width: 576px) {
+.floating-btn {
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  bottom: 30px;
+  right: 30px;
+}
+}

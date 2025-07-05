@@ -95,13 +95,8 @@ if (!isset($_SESSION['idUtente'])) {
     </div>
 </main>
 
-<!-- Pulsante flottante posizionato in basso a destra -->
-<button 
-  type="button" 
-  class="btn btn-primary position-fixed bottom-0 end-0 m-4 shadow rounded-circle" 
-  data-bs-toggle="modal" 
-  data-bs-target="#progressModal" 
-  title="Aggiorna progressi">
+<!-- Pulsante flottante per aggiornare progressi -->
+<button type="button" class="btn btn-primary position-fixed bottom-0 end-0 m-4 shadow rounded-circle" data-bs-toggle="modal" data-bs-target="#progressModal" title="Aggiorna progressi">
   <i class="fas fa-plus"></i>
 </button>
 
@@ -110,69 +105,98 @@ if (!isset($_SESSION['idUtente'])) {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="progressModalLabel">Progressi</h5>
-          <!-- Aggiungi l'icona della lente di ingrandimento -->
-        <button type="button" class="btn btn-link" id="searchBookBtn">
-        <i class="fas fa-search"></i>
+        <h5 class="modal-title" id="progressModalLabel">Aggiungi libro e progressi</h5>
+        <button type="button" class="btn btn-link" id="searchBookBtn" title="Cerca libro per ISBN">
+          <i class="fas fa-search"></i>
         </button>
       </div>
       <div class="modal-body">
-        <!-- Campo di input per l'ISBN -->
+        <!-- Sezione ricerca ISBN -->
         <div class="mb-3">
-          <input type="text" class="form-control" id="isbnInput" placeholder="Inserisci l'ISBN del libro">
+          <label for="isbnInput" class="form-label">Ricerca libro per ISBN</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="isbnInput" placeholder="Inserisci codice ISBN">
+            <button class="btn btn-outline-secondary" type="button" id="searchIsbnBtn">
+              Cerca
+            </button>
+          </div>
+          <div id="isbnFeedback" class="form-text"></div>
         </div>
-        <!-- Bottone per aggiungere manualmente -->
-        <button type="button" class="btn btn-secondary mb-3" id="addManuallyBtn">
-          <i class="fas fa-plus"></i> Aggiungi manualmente
-        </button>
-        <!-- Qui verranno visualizzati i dettagli del libro -->
-        <div id="bookDetails"></div>
-        <h3>Aggiungi libro manualmente</h3>
-        <form id="progressForm">
-          <!-- Sezione aggiunta libro manuale -->
+
+        <!-- Dettagli libro (popolati automaticamente) -->
+        <div id="bookDetails" class="mb-4 d-none">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-title"><span id="foundTitle"></span></h6>
+              <p class="card-text mb-1">Autore: <span id="foundAuthor"></span></p>
+              <p class="card-text mb-1">Pagine: <span id="foundPages"></span></p>
+              <p class="card-text mb-1">Editore: <span id="foundPublisher"></span></p>
+              <button id="useBookDetails" class="btn btn-sm btn-success mt-2">Usa questi dati</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form per inserimento manuale libro -->
+        <form id="bookForm">
+          <h5 class="mb-3">Dettagli libro</h5>
+          
           <div class="mb-3">
-            <label for="titolo" class="form-label">Titolo</label>
+            <label for="titolo" class="form-label">Titolo <span class="text-danger">*</span></label>
             <input type="text" class="form-control" id="titolo" name="titolo" required>
           </div>
-          <div class="mb-3">
-            <label for="editore" class="form-label">Editore</label>
-            <input type="text" class="form-control" id="editore" name="editore" required>
+          
+          <div class="row g-2">
+            <div class="col-md-6 mb-3">
+              <label for="autore" class="form-label">Autore</label>
+              <input type="text" class="form-control" id="autore" name="autore">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="genere" class="form-label">Genere</label>
+              <input type="text" class="form-control" id="genere" name="genere">
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="autore" class="form-label">Autore</label>
-            <input type="text" class="form-control" id="autore" name="autore" required>
+          
+          <div class="row g-2">
+            <div class="col-md-6 mb-3">
+              <label for="editore" class="form-label">Editore</label>
+              <input type="text" class="form-control" id="editore" name="editore">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="numeroPagine" class="form-label">Numero pagine</label>
+              <input type="number" class="form-control" id="numeroPagine" name="numeroPagine" min="1">
+            </div>
           </div>
-          <div class="mb-3">
-            <label for="genere" class="form-label">Genere</label>
-            <input type="text" class="form-control" id="genere" name="genere" required>
+          
+          <div class="row g-2">
+            <div class="col-md-6 mb-3">
+              <label for="dataPubblicazione" class="form-label">Data pubblicazione</label>
+              <input type="date" class="form-control" id="dataPubblicazione" name="dataPubblicazione">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="dataLettura" class="form-label">Data fine lettura</label>
+              <input type="date" class="form-control" id="dataLettura" name="dataLettura">
+            </div>
           </div>
+        </form>
+
+        <!-- Sezione aggiornamento statistiche -->
+        <form id="progressForm" class="mt-4">
+          <h5 class="mb-3">Aggiornamento progressi</h5>
+          
           <div class="mb-3">
-            <label  for="numeroPagine" class="form-label">Numero di pagine del libro</label>
-            <input type="number" class="form-control" id="numeroPagine" name="numeroPagine" required>
+            <label for="pagine-lette-oggi" class="form-label">Pagine lette oggi</label>
+            <input type="number" class="form-control" id="pagine-lette-oggi" name="pagine-lette-oggi" min="0" required>
           </div>
+          
           <div class="mb-3">
-            <label for="dataPubblicazione" class="form-label">Data di pubblicazione</label>
-            <input type="date" class="form-control" id="dataPubblicazione" name="dataPubblicazione" required>
-          </div>
-          <div class="mb-3">
-            <label for="dataLettura" class="form-label">Fine lettura il</label>
-            <input type="date" class="form-control" id="dataLettura" name="dataLettura" required>
-          </div>
-          <!-- Sezione aggiornamento progressi -->
-          <h3>Aggiorna statistiche</h3>
-          <div class="mb-3">
-            <label  for="pagine-lette-oggi" class="form-label">Pagine lette oggi</label>
-            <input type="number" class="form-control" id="pagine-lette-oggi" name="pagine-lette-oggi" required>
-          </div>
-          <div class="mb-3">
-            <label for="pagine-libro-corrente" class="form-label">Pagine lette del libro corrente</label>
-            <input type="number" class="form-control" id="pagine-libro-corrente" name="pagine-libro-corrente" required>
+            <label for="pagine-libro-corrente" class="form-label">Pagine totali libro corrente</label>
+            <input type="number" class="form-control" id="pagine-libro-corrente" name="pagine-libro-corrente" min="0" required>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-        <button type="button" class="btn btn-primary" id="saveProgress">Salva</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-primary" id="saveProgress">Salva tutto</button>
       </div>
     </div>
   </div>
